@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Word Frequency</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.13/p5.min.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.13/addons/p5.dom.min.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <script>
+            var dictionary = []
+            var textX = 0
+            function setup() {
+                createCanvas(windowWifth, windowHeight)
+                loadStrings('sotu-t-2.txt', analyze)
+            }
+
+            function analyze(sotu){
+
+                sotu.forEach(function(phrase) {
+
+                    var words = phrase.split(' ')
+
+                    words.forEach(function(word) {
+
+                        var filteredWords = dictionary.filter(function(element) {
+                            return element.word == word;
+                        })
+
+                        if (filteredWords.length == 0) {
+                            // match
+                            dictionary.push({'word': word, 'count': 1})
+                        }
+                        else {
+                            // no match
+                            filteredWords[0].count++
+                        }
+                    })
+                })
+
+                console.log(dictionary)
+
+                dictionary.sort(function(a,b,) {
+                    return b.count - a.count
+                })
+
+                // typography output of dictionary
+                display()
+            }
+
+            function display() {
+                background(255)
+                translate(textX,height/2)
+                fictionary.forEach(function(element) {
+                    textSize(6+element.count)
+                    var txtWidth = textWidth(element.word)
+                    text(element.word, 0, 0)
+                    translate(txtWidth, 0)
+                })
+            }
+
+            function mouseDragged() {
+                textX += mouseX - pmouseX
+                display()
+            }
+        </script>
+    </body>
+</html>

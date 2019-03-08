@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+            body {
+                background: #fcc9f4;
+            }
+        </style>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+    </head>
+    <body>
+        <script>
+            var svg = d3.select('body')
+                .append('svg')
+                .attr('width',window.innerWidth)
+                .attr('height',window.innerHeight)
+            var g = svg.append('g')
+            g.append('circle')
+                .attr('cx',100)
+                .attr('cy',100)
+                .attr('r',50)
+                .style('fill','#2f5b22')
+                .style('stroke','white')
+                .style('stroke-width',3)
+            g.append('rect')
+                .attr('x',50)
+                .attr('y',200)
+                .attr('width',100)
+                .attr('height',50)
+                .style('fill','#2f5b22')
+                .style('stroke','white')
+                .style('stroke-width',3)
+            g.append('text')
+                .text("hi <3")
+                .attr('x',100)
+                .attr('y',170)
+                .style('fill','white')
+                .style('font-family','Arial')
+                .style('text-anchor','middle')
+        </script>
+    </body>
+</html>

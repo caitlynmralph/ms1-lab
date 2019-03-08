@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+            body {
+                background: white;
+            }
+        </style>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+    </head>
+    <body>
+        <script>
+            d3.json("museums.json").then((data) => {
+                svgPlot(data)
+            })
+
+            var svg = d3.select('body')
+                .append('svg')
+                .attr('width',window.innerWidth)
+                .attr('height', window.innerHeight)
+            
+                let svgPlot = (data) => {
+                    console.log(data)
+
+                    let heading = svg.append('text')
+                        .text('US Art Nonprofit Organizations')
+                        .attr('x', 50)
+                        .attr('y', 50)
+                        .attr('font-size', '.25in')
+                    
+                    let max = (() => {
+                        let maxValue = []
+                        for(let i in data) {
+                            maxValue.push(data[i].operatingExpenses)
+                        }
+
+                        return d3.max(d3.values(maxValue))
+                    })()
+
+                    var y = d3.scaleLinear()
+                        .domain([0,max])
+                        .range([0,960])
+
+                    var x = d3.scaleLinear()
+                        .domain([0, data.length])
+                        .range([0,window.innerWidth])
+
+                    let bars = svg.selectAll('rect')
+                        .data(data)
+                        .enter()
+                        .append('rect')
+                        .attr('x', (d,i) => {
+                            return x(i)
+                        })
+                        .attr('y', (d,i) => {
+                            return y(d.operatingExpenses)
+                        })
+                        .attr('width', 10)
+                        .attr('height', (d,i) => {
+                            console.log(i)
+                            return window.innerHeight - y(d.operatingExpenses)
+                        })
+                        .on('mouseenter',function(){
+                            console.log('hover')
+                            heading.text(d.name) 
+                        })
+                        
+                }
+
+                var g = svg.append('g')
+            </script>
+    </body>
+</html>
